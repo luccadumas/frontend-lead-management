@@ -1,6 +1,6 @@
 import React from 'react';
-import { useLeads } from '../../contexts/LeadsContext';
-import { LeadList } from '../../features/leads/LeadList';
+import { useLeads } from '@/contexts/LeadsContext';
+import { LeadList } from '@/features/leads/LeadList';
 import { PageContainer } from './styles';
 import type { InvitedPageProps } from './types';
 

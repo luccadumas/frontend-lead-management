@@ -1,5 +1,9 @@
 export type LeadStatus = 'invited' | 'accepted' | 'declined';
 
+export interface State {
+  leads: Lead[];
+}
+
 export interface Lead {
   id: string;
   firstName: string;

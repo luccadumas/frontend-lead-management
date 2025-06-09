@@ -1,4 +1,4 @@
-import type { Lead, LeadStatus } from '../../../contexts/LeadsContext/types';
+import type { Lead, LeadStatus } from '@/contexts/LeadsContext/types';
 
 export interface LeadListProps {
   leads: Lead[];
