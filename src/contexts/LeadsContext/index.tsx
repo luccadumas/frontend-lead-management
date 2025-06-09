@@ -1,10 +1,6 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useReducer } from 'react';
 import type { ReactNode } from 'react';
-import type { Lead } from './types';
-
-interface State {
-  leads: Lead[];
-}
+import type { Lead, State } from './types';
 
 type Action =
   | { type: 'ACCEPT_LEAD'; id: string }

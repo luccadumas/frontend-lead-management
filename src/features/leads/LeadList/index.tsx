@@ -1,34 +1,37 @@
 import React from 'react';
-import type { Lead, LeadStatus } from '../../../contexts/LeadsContext/types';
-import { LeadCard } from '../../../components/LeadCard';
-
-export interface LeadListProps {
-  leads: Lead[];
-  status: LeadStatus;
-  onAccept?: (id: string) => void;
-  onDecline?: (id: string) => void;
-}
+import type { LeadListProps } from './types';
+import { LeadCard } from '@/components/LeadCard';
+import { ListContainer, EmptyMessage } from './styles';
 
 export const LeadList: React.FC<LeadListProps> = ({ leads, status, onAccept, onDecline }) => {
+  const filteredLeads = leads.filter(lead => lead.status === status);
   return (
-    <div>
-      {leads.filter(lead => lead.status === status).map(lead => (
-        <LeadCard
-          key={lead.id}
-          name={status === 'accepted' ? `${lead.firstName}${lead.lastName ? ' ' + lead.lastName : ''}` : lead.firstName}
-          date={lead.date}
-          suburb={lead.suburb}
-          category={lead.category}
-          jobId={lead.id}
-          description={lead.description}
-          price={lead.price}
-          accepted={status === 'accepted'}
-          phone={status === 'accepted' ? lead.phone : undefined}
-          email={status === 'accepted' ? lead.email : undefined}
-          onAccept={onAccept ? () => onAccept(lead.id) : undefined}
-          onDecline={onDecline ? () => onDecline(lead.id) : undefined}
-        />
-      ))}
-    </div>
+    <ListContainer>
+      {filteredLeads.length === 0 ? (
+        <EmptyMessage>
+          {status === 'invited'
+            ? 'No invited leads at this time.'
+            : 'No leads accepted at this time.'}
+        </EmptyMessage>
+      ) : (
+        filteredLeads.map(lead => (
+          <LeadCard
+            key={lead.id}
+            name={status === 'accepted' ? `${lead.firstName}${lead.lastName ? ' ' + lead.lastName : ''}` : lead.firstName}
+            date={lead.date}
+            suburb={lead.suburb}
+            category={lead.category}
+            jobId={lead.id}
+            description={lead.description}
+            price={lead.price}
+            accepted={status === 'accepted'}
+            phone={status === 'accepted' && lead.phone}
+            email={status === 'accepted' && lead.email}
+            onAccept={onAccept && (() => onAccept(lead.id))}
+            onDecline={onDecline && (() => onDecline(lead.id))}
+          />
+        ))
+      )}
+    </ListContainer>
   );
 }; 
