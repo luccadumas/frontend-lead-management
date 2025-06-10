@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { LeadList } from '../index';
 import { useLeads } from '@/contexts/LeadsContext';
 import type { LeadCardProps } from '@/components/LeadCard/types';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
 
 // Mock SVG imports with proper React components
 jest.mock('@/assets/icons/location.svg?react', () => () => <div data-testid="location-icon" />);
@@ -12,6 +13,11 @@ jest.mock('@/assets/icons/email.svg?react', () => () => <div data-testid="email-
 // Mock the leads context
 jest.mock('@/contexts/LeadsContext', () => ({
   useLeads: jest.fn(),
+}));
+
+// Mock the error handler hook
+jest.mock('@/hooks/useErrorHandler', () => ({
+  useErrorHandler: jest.fn(),
 }));
 
 // Mock the LeadCard component
@@ -59,6 +65,11 @@ describe('LeadList', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    (useErrorHandler as jest.Mock).mockReturnValue({
+      error: null,
+      handleError: jest.fn(),
+      clearError: jest.fn(),
+    });
   });
 
   it('should render loading state', () => {
@@ -97,19 +108,29 @@ describe('LeadList', () => {
 
     render(<LeadList status="invited" />);
     await waitFor(() => {
-      expect(screen.getByText('John')).toBeInTheDocument();
+      expect(screen.getByText('John Doe')).toBeInTheDocument();
     });
   });
 
   it('should handle API error', () => {
+    const errorMessage = 'Failed to fetch leads';
     (useLeads as jest.Mock).mockReturnValue({
       leads: [],
       loading: false,
-      error: 'Failed to fetch leads',
+      error: null,
       fetchLeads: jest.fn(),
     });
 
+    (useErrorHandler as jest.Mock).mockReturnValue({
+      error: { message: errorMessage },
+      handleError: jest.fn(),
+      clearError: jest.fn(),
+    });
+
     render(<LeadList status="invited" />);
-    expect(screen.getByText('Error: Failed to fetch leads')).toBeInTheDocument();
+    
+    const errorElement = screen.getByTestId('error-message');
+    expect(errorElement).toBeInTheDocument();
+    expect(errorElement).toHaveTextContent(errorMessage);
   });
 });
