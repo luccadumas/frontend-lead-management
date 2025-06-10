@@ -1,15 +1,7 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
-import type { Lead, LeadStatus } from './types';
+import type { Lead, LeadStatus, LeadsContextType } from './types';
 import { leadsApi } from '@/services/api';
 
-interface LeadsContextType {
-  leads: Lead[];
-  loading: boolean;
-  error: string | null;
-  fetchLeads: (status?: LeadStatus) => Promise<void>;
-  acceptLead: (id: string) => Promise<void>;
-  declineLead: (id: string) => Promise<void>;
-}
 
 const LeadsContext = createContext<LeadsContextType | undefined>(undefined);
 

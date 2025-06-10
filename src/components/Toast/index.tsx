@@ -1,13 +1,6 @@
 import React from 'react';
 import { ToastContainer, ToastMessage } from './styles';
-
-export type ToastType = 'success' | 'error' | 'info' | 'warning';
-
-interface ToastProps {
-  message: string;
-  type: ToastType;
-  onClose: () => void;
-}
+import { ToastContextType, ToastProps, ToastType } from './types';
 
 export const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
   React.useEffect(() => {
@@ -24,10 +17,6 @@ export const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
     </ToastContainer>
   );
 };
-
-interface ToastContextType {
-  showToast: (message: string, type: ToastType) => void;
-}
 
 export const ToastContext = React.createContext<ToastContextType | undefined>(undefined);
 
