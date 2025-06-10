@@ -6,12 +6,12 @@ interface CacheItem<T> {
 }
 
 interface CacheOptions {
-  ttl?: number; // Time to live in milliseconds
+  ttl?: number;
 }
 
 export function useCache<T>(options: CacheOptions = {}) {
   const [cache] = useState(new Map<string, CacheItem<T>>());
-  const { ttl = 5 * 60 * 1000 } = options; // Default TTL: 5 minutes
+  const { ttl = 5 * 60 * 1000 } = options;
 
   const get = useCallback((key: string): T | null => {
     const item = cache.get(key);

@@ -4,6 +4,15 @@ export interface State {
   leads: Lead[];
 }
 
+export interface LeadsContextType {
+  leads: Lead[];
+  loading: boolean;
+  error: string | null;
+  fetchLeads: (status?: LeadStatus) => Promise<void>;
+  acceptLead: (id: string) => Promise<void>;
+  declineLead: (id: string) => Promise<void>;
+}
+
 export interface Lead {
   id: string;
   firstName: string;

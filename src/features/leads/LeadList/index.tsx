@@ -1,34 +1,23 @@
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
-import type { Lead, LeadStatus } from '@/contexts/LeadsContext/types';
+import React from 'react';
 import { LeadCard } from '@/components/LeadCard';
 import { ListContainer, EmptyMessage, LoadingContainer, LoadingCard } from './styles';
-import { useLeads } from '@/contexts/LeadsContext';
 import { Pagination } from '@/components/Pagination';
-
-interface LeadListProps {
-  status: LeadStatus;
-}
+import { LeadListProps } from './types';
+import { useLeadList } from './hooks/useLeadList';
 
 export const LeadList: React.FC<LeadListProps> = ({ status }) => {
-  const { leads = [], loading, error, fetchLeads, acceptLead, declineLead } = useLeads();
-  const [page, setPage] = useState(1);
-  const pageSize = 5;
-
-  useEffect(() => {
-    fetchLeads(status);
-  }, [fetchLeads, status]);
-
-  const filteredLeads = useMemo(() => leads.filter((lead: Lead) => lead.status === status), [leads, status]);
-  const paginatedLeads = useMemo(() => filteredLeads.slice((page - 1) * pageSize, page * pageSize), [filteredLeads, page]);
-  const totalPages = Math.ceil(filteredLeads.length / pageSize);
-
-  const handleAccept = useCallback((id: string) => {
-    if (acceptLead) acceptLead(id);
-  }, [acceptLead]);
-
-  const handleDecline = useCallback((id: string) => {
-    if (declineLead) declineLead(id);
-  }, [declineLead]);
+  const {
+    loading,
+    error,
+    paginatedLeads,
+    totalPages,
+    page,
+    handleAccept,
+    handleDecline,
+    handlePrevPage,
+    handleNextPage,
+    filteredLeads
+  } = useLeadList(status);
 
   if (loading) {
     return (
@@ -41,7 +30,7 @@ export const LeadList: React.FC<LeadListProps> = ({ status }) => {
   }
 
   if (error) {
-    return <EmptyMessage>Sorry, something went wrong. Please try again later.<br />Error: {error}</EmptyMessage>;
+    return <EmptyMessage>Sorry, something went wrong. Please try again later.<br />Error: {error.message}</EmptyMessage>;
   }
 
   return (
@@ -82,8 +71,8 @@ export const LeadList: React.FC<LeadListProps> = ({ status }) => {
           <Pagination
             page={page}
             totalPages={totalPages}
-            onPrev={() => setPage(p => Math.max(1, p - 1))}
-            onNext={() => setPage(p => Math.min(totalPages, p + 1))}
+            onPrev={handlePrevPage}
+            onNext={handleNextPage}
           />
         </>
       )}
