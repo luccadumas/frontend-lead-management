@@ -182,3 +182,62 @@ src/
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Storybook
+
+This project uses [Storybook](https://storybook.js.org/) for component documentation and isolated visualization.
+
+### How to run Storybook
+
+```bash
+yarn storybook
+```
+
+Storybook will be available at [http://localhost:6006](http://localhost:6006).
+
+### Recommended structure for stories
+
+`.stories.tsx` files should be kept alongside their corresponding component, for example:
+
+```
+src/components/LeadCard/
+  ├── index.tsx
+  ├── LeadCard.stories.tsx
+  └── ...
+```
+
+### Example story
+
+```tsx
+// src/components/LeadCard/LeadCard.stories.tsx
+import type { Meta, StoryObj } from '@storybook/react';
+import { LeadCard } from './index';
+
+const meta: Meta<typeof LeadCard> = {
+  title: 'Components/LeadCard',
+  component: LeadCard,
+  parameters: { layout: 'centered' },
+};
+export default meta;
+type Story = StoryObj<typeof LeadCard>;
+
+export const Invited: Story = {
+  args: {
+    name: 'John Doe',
+    date: '2024-02-20',
+    suburb: 'Sydney',
+    category: 'Plumbing',
+    jobId: 12345,
+    description: 'Fix leaking pipe',
+    price: 100,
+    accepted: false,
+    onAccept: () => alert('Accept clicked'),
+    onDecline: () => alert('Decline clicked'),
+  },
+};
+```
+
+### Storybook advantages
+- Isolated component visualization
+- Live and interactive documentation
+- Facilitates visual testing and UI review
