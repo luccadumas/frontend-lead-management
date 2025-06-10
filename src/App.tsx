@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
-import { LeadProvider } from './contexts/LeadsContext';
+import { LeadsProvider } from './contexts/LeadsContext';
 import { Tabs } from './components/Tabs';
-import { Invited } from './pages/Invited';
-import { Accepted } from './pages/Accepted';
+import type { LeadStatus } from './contexts/LeadsContext/types';
+import { LeadList } from './features/leads/LeadList';
 import { GlobalStyle } from './styles/GlobalStyle';
 import { MainContainer } from './pages/Accepted/styles';
 
 const App: React.FC = () => {
-  const [tab, setTab] = useState<'invited' | 'accepted'>('invited');
+  const [activeTab, setActiveTab] = useState<LeadStatus>('invited');
+
   return (
-    <LeadProvider>
+    <LeadsProvider>
       <GlobalStyle />
       <MainContainer>
-        <Tabs active={tab} onChange={setTab} />
-        {tab === 'invited' ? <Invited /> : <Accepted />}
+        <Tabs active={activeTab} onChange={setActiveTab} />
+        <LeadList status={activeTab} />
       </MainContainer>
-    </LeadProvider>
+    </LeadsProvider>
   );
 };
 

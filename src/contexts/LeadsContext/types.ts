@@ -11,6 +11,7 @@ export interface Lead {
   date: string;
   suburb: string;
   category: string;
+  jobId: number;
   description: string;
   price: number;
   status: LeadStatus;
