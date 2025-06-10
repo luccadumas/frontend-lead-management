@@ -5,91 +5,108 @@ import LocationIcon from '@/assets/icons/location.svg?react';
 import BriefcaseIcon from '@/assets/icons/briefcase.svg?react';
 import PhoneIcon from '@/assets/icons/phone.svg?react';
 import EmailIcon from '@/assets/icons/email.svg?react';
-import { ListContainer, EmptyMessage } from './styles';
-import type { LeadListProps } from '@/features/leads/LeadList/types';
-import type { Lead } from '@/contexts/LeadsContext/types';
 
+/**
+ * LeadCard Component
+ * 
+ * Displays a lead's information in a card format with different states:
+ * - Invited: Shows basic info and Accept/Decline buttons
+ * - Accepted: Shows full contact info and no action buttons
+ * 
+ * @component
+ * @param {LeadCardProps} props - Component props
+ * @param {string} props.name - Lead's name
+ * @param {string} props.date - Creation date
+ * @param {string} props.suburb - Lead's suburb
+ * @param {string} props.category - Job category
+ * @param {number} props.jobId - Job identifier
+ * @param {string} props.description - Job description
+ * @param {number} props.price - Job price
+ * @param {boolean} props.accepted - Whether the lead is accepted
+ * @param {string} [props.phone] - Contact phone (only shown when accepted)
+ * @param {string} [props.email] - Contact email (only shown when accepted)
+ * @param {() => void} [props.onAccept] - Accept button handler
+ * @param {() => void} [props.onDecline] - Decline button handler
+ * 
+ * @example
+ * ```tsx
+ * <LeadCard
+ *   name="John Doe"
+ *   date="2024-02-20"
+ *   suburb="Sydney"
+ *   category="Plumbing"
+ *   jobId={12345}
+ *   description="Fix leaking pipe"
+ *   price={100}
+ *   accepted={false}
+ *   onAccept={() => handleAccept()}
+ *   onDecline={() => handleDecline()}
+ * />
+ * ```
+ */
 export const LeadCard: React.FC<LeadCardProps> = ({
   name, date, suburb, category, jobId, description, price, onAccept, onDecline, accepted, phone, email
 }) => (
-  <Card>
-    <Header>
-      <Avatar>{name.charAt(0).toUpperCase()}</Avatar>
+  <Card data-testid="card">
+    <Header data-testid="header">
+      <Avatar data-testid="avatar">{name.charAt(0).toUpperCase()}</Avatar>
       <div>
-        <Name>{name}</Name>
-        <Info>{date}</Info>
+        <Name data-testid="name">{name}</Name>
+        <Info data-testid="info">{date}</Info>
       </div>
     </Header>
-    <Divider />
-    <Row>
-      <Info><Icon><LocationIcon aria-label="Location icon" /></Icon>{suburb}</Info>
-      <Info><Icon><BriefcaseIcon aria-label="Category icon" /></Icon>{category}</Info>
-      <Info>
-        <Icon></Icon>Job ID: {jobId}
+    <Divider data-testid="divider" />
+    <Row data-testid="row">
+      <Info data-testid="info">
+        <Icon data-testid="icon">
+          <LocationIcon aria-label="Location icon" />
+        </Icon>
+        {suburb}
+      </Info>
+      <Info data-testid="info">
+        <Icon data-testid="icon">
+          <BriefcaseIcon aria-label="Category icon" />
+        </Icon>
+        {category}
+      </Info>
+      <Info data-testid="info">
+        <Icon data-testid="icon" />
+        Job ID: {jobId}
       </Info>
       {accepted && (
-        <Info>
+        <Info data-testid="info">
           <PriceAccepted>${price.toFixed(2)} Lead Invitation</PriceAccepted>
         </Info>
       )}
     </Row>
-    <Divider />
+    <Divider data-testid="divider" />
     {accepted && (
-      <Row>
+      <Row data-testid="row">
         {phone && (
-          <Info>
-            <Icon><PhoneIcon aria-label="Phone icon" /></Icon>
+          <Info data-testid="info">
+            <Icon data-testid="icon">
+              <PhoneIcon aria-label="Phone icon" />
+            </Icon>
             <a href={`tel:${phone}`} aria-label={`Call ${phone}`}>{phone}</a>
           </Info>
         )}
         {email && (
-          <Info>
-            <Icon><EmailIcon aria-label="Email icon" /></Icon>
+          <Info data-testid="info">
+            <Icon data-testid="icon">
+              <EmailIcon aria-label="Email icon" />
+            </Icon>
             <a href={`mailto:${email}`} aria-label={`Send email to ${email}`}>{email}</a>
           </Info>
         )}
       </Row>
     )}
-    <Description>{description}</Description>
+    <Description data-testid="description">{description}</Description>
     {!accepted && (
-      <Row>
-        <Button primary onClick={onAccept}>Accept</Button>
-        <Button onClick={onDecline}>Decline</Button>
-        <Price>${price.toFixed(2)} <span>Lead Invitation</span></Price>
+      <Row data-testid="row">
+        <Button data-testid="accept-button" primary onClick={onAccept}>Accept</Button>
+        <Button data-testid="decline-button" onClick={onDecline}>Decline</Button>
+        <Price data-testid="price">${price.toFixed(2)} <span>Lead Invitation</span></Price>
       </Row>
     )}
   </Card>
-);
-
-export const LeadList: React.FC<LeadListProps> = ({ leads, status, onAccept, onDecline }) => {
-  const filteredLeads = leads.filter((lead: Lead) => lead.status === status);
-  return (
-    <ListContainer>
-      {filteredLeads.length === 0 ? (
-        <EmptyMessage>
-          {status === 'invited'
-            ? 'No invited leads at this time.'
-            : 'No leads accepted at this time.'}
-        </EmptyMessage>
-      ) : (
-        filteredLeads.map((lead: Lead) => (
-          <LeadCard
-            key={lead.id}
-            name={`${lead.firstName} ${lead.lastName}`}
-            date={lead.date}
-            suburb={lead.suburb}
-            category={lead.category}
-            jobId={lead.jobId}
-            description={lead.description}
-            price={lead.price}
-            onAccept={onAccept && (() => onAccept(lead.id))}
-            onDecline={onDecline && (() => onDecline(lead.id))}
-            accepted={lead.status === 'accepted'}
-            phone={lead.phone}
-            email={lead.email}
-          />
-        ))
-      )}
-    </ListContainer>
-  );
-}; 
+); 

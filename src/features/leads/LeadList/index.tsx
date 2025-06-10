@@ -19,7 +19,7 @@ export const LeadList: React.FC<LeadListProps> = ({ status }) => {
     return (
       <LoadingContainer>
         {[1, 2, 3].map((key) => (
-          <LoadingCard key={key} />
+          <LoadingCard key={key} data-testid="loading-card" />
         ))}
       </LoadingContainer>
     );
