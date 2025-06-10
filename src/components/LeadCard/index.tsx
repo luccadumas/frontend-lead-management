@@ -6,45 +6,7 @@ import BriefcaseIcon from '@/assets/icons/briefcase.svg?react';
 import PhoneIcon from '@/assets/icons/phone.svg?react';
 import EmailIcon from '@/assets/icons/email.svg?react';
 
-/**
- * LeadCard Component
- * 
- * Displays a lead's information in a card format with different states:
- * - Invited: Shows basic info and Accept/Decline buttons
- * - Accepted: Shows full contact info and no action buttons
- * 
- * @component
- * @param {LeadCardProps} props - Component props
- * @param {string} props.name - Lead's name
- * @param {string} props.date - Creation date
- * @param {string} props.suburb - Lead's suburb
- * @param {string} props.category - Job category
- * @param {number} props.jobId - Job identifier
- * @param {string} props.description - Job description
- * @param {number} props.price - Job price
- * @param {boolean} props.accepted - Whether the lead is accepted
- * @param {string} [props.phone] - Contact phone (only shown when accepted)
- * @param {string} [props.email] - Contact email (only shown when accepted)
- * @param {() => void} [props.onAccept] - Accept button handler
- * @param {() => void} [props.onDecline] - Decline button handler
- * 
- * @example
- * ```tsx
- * <LeadCard
- *   name="John Doe"
- *   date="2024-02-20"
- *   suburb="Sydney"
- *   category="Plumbing"
- *   jobId={12345}
- *   description="Fix leaking pipe"
- *   price={100}
- *   accepted={false}
- *   onAccept={() => handleAccept()}
- *   onDecline={() => handleDecline()}
- * />
- * ```
- */
-export const LeadCard: React.FC<LeadCardProps> = ({
+const LeadCardComponent: React.FC<LeadCardProps> = ({
   name, date, suburb, category, jobId, description, price, onAccept, onDecline, accepted, phone, email
 }) => (
   <Card data-testid="card">
@@ -109,4 +71,6 @@ export const LeadCard: React.FC<LeadCardProps> = ({
       </Row>
     )}
   </Card>
-); 
+);
+
+export const LeadCard = React.memo(LeadCardComponent); 
