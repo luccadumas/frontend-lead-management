@@ -39,6 +39,7 @@ export const LoadingCard = styled.div`
   height: 200px;
   position: relative;
   overflow: hidden;
+  animation: ${shimmer} 1.5s infinite;
 
   &::after {
     content: '';
@@ -49,6 +50,5 @@ export const LoadingCard = styled.div`
     left: 0;
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;
-    animation: ${shimmer} 1.5s infinite;
   }
 `; 

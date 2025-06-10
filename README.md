@@ -70,6 +70,9 @@ Using npm:
 - `npm run lint` - Run ESLint
 - `npm run lint:fix` - Fix ESLint issues
 - `npm run type-check` - Run TypeScript type checking
+- `npm test` - Run tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:coverage` - Run tests with coverage report
 
 Using Yarn:
 - `yarn dev` - Start development server
@@ -78,6 +81,65 @@ Using Yarn:
 - `yarn lint` - Run ESLint
 - `yarn lint:fix` - Fix ESLint issues
 - `yarn type-check` - Run TypeScript type checking
+- `yarn test` - Run tests
+- `yarn test:watch` - Run tests in watch mode
+- `yarn test:coverage` - Run tests with coverage report
+
+## Testing
+
+The project uses Jest and React Testing Library for testing. The test suite includes:
+
+### LeadCard Component Tests
+
+```typescript
+describe('LeadCard', () => {
+  // Test contact information display
+  it('should display contact information when lead is accepted', () => {
+    // Verifies that phone and email are shown when lead is accepted
+  });
+
+  // Test accept button functionality
+  it('should call onAccept when Accept button is clicked', () => {
+    // Verifies that the accept callback is called
+  });
+
+  // Test decline button functionality
+  it('should call onDecline when Decline button is clicked', () => {
+    // Verifies that the decline callback is called
+  });
+
+  // Test button visibility
+  it('should not show Accept/Decline buttons when lead is accepted', () => {
+    // Verifies that action buttons are hidden for accepted leads
+  });
+});
+```
+
+### LeadList Component Tests
+
+```typescript
+describe('LeadList', () => {
+  // Test loading state
+  it('should render loading state', () => {
+    // Verifies that loading cards are displayed
+  });
+
+  // Test empty state
+  it('should render empty state', () => {
+    // Verifies that appropriate message is shown when no leads are available
+  });
+
+  // Test leads rendering
+  it('should render leads', async () => {
+    // Verifies that leads are properly displayed
+  });
+
+  // Test error handling
+  it('should handle API error', () => {
+    // Verifies that error messages are properly displayed
+  });
+});
+```
 
 ## Project Structure
 
@@ -106,6 +168,8 @@ src/
 - Styled Components
 - ESLint
 - Prettier
+- Jest
+- React Testing Library
 
 ## Contributing
 
@@ -118,3 +182,62 @@ src/
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Storybook
+
+This project uses [Storybook](https://storybook.js.org/) for component documentation and isolated visualization.
+
+### How to run Storybook
+
+```bash
+yarn storybook
+```
+
+Storybook will be available at [http://localhost:6006](http://localhost:6006).
+
+### Recommended structure for stories
+
+`.stories.tsx` files should be kept alongside their corresponding component, for example:
+
+```
+src/components/LeadCard/
+  ├── index.tsx
+  ├── LeadCard.stories.tsx
+  └── ...
+```
+
+### Example story
+
+```tsx
+// src/components/LeadCard/LeadCard.stories.tsx
+import type { Meta, StoryObj } from '@storybook/react';
+import { LeadCard } from './index';
+
+const meta: Meta<typeof LeadCard> = {
+  title: 'Components/LeadCard',
+  component: LeadCard,
+  parameters: { layout: 'centered' },
+};
+export default meta;
+type Story = StoryObj<typeof LeadCard>;
+
+export const Invited: Story = {
+  args: {
+    name: 'John Doe',
+    date: '2024-02-20',
+    suburb: 'Sydney',
+    category: 'Plumbing',
+    jobId: 12345,
+    description: 'Fix leaking pipe',
+    price: 100,
+    accepted: false,
+    onAccept: () => alert('Accept clicked'),
+    onDecline: () => alert('Decline clicked'),
+  },
+};
+```
+
+### Storybook advantages
+- Isolated component visualization
+- Live and interactive documentation
+- Facilitates visual testing and UI review
