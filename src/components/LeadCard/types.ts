@@ -3,7 +3,7 @@ export interface LeadCardProps {
   date: string;
   suburb: string;
   category: string;
-  jobId: string;
+  jobId: number;
   description: string;
   price: number;
   onAccept?: () => void;

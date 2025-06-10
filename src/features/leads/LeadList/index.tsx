@@ -1,17 +1,45 @@
-import React from 'react';
-import type { LeadListProps } from './types';
+import React, { useEffect } from 'react';
+import type { Lead, LeadStatus } from '@/contexts/LeadsContext/types';
 import { LeadCard } from '@/components/LeadCard';
-import { ListContainer, EmptyMessage } from './styles';
+import { ListContainer, EmptyMessage, LoadingContainer, LoadingCard } from './styles';
+import { useLeads } from '@/contexts/LeadsContext';
 
-export const LeadList: React.FC<LeadListProps> = ({ leads, status, onAccept, onDecline }) => {
-  const filteredLeads = leads.filter(lead => lead.status === status);
+interface LeadListProps {
+  status: LeadStatus;
+}
+
+export const LeadList: React.FC<LeadListProps> = ({ status }) => {
+  const { leads = [], loading, error, fetchLeads, acceptLead, declineLead } = useLeads();
+
+  useEffect(() => {
+    fetchLeads(status);
+  }, [fetchLeads, status]);
+
+  if (loading) {
+    return (
+      <LoadingContainer>
+        {[1, 2, 3].map((key) => (
+          <LoadingCard key={key} />
+        ))}
+      </LoadingContainer>
+    );
+  }
+
+  if (error) {
+    return <EmptyMessage>Error: {error}</EmptyMessage>;
+  }
+
+  const filteredLeads = leads.filter((lead: Lead) => lead.status === status);
+
   return (
     <ListContainer>
       {filteredLeads.length === 0 ? (
         <EmptyMessage>
           {status === 'invited'
             ? 'No invited leads at this time.'
-            : 'No leads accepted at this time.'}
+            : status === 'accepted'
+            ? 'No leads accepted at this time.'
+            : 'No leads declined at this time.'}
         </EmptyMessage>
       ) : (
         filteredLeads.map(lead => (
@@ -21,14 +49,14 @@ export const LeadList: React.FC<LeadListProps> = ({ leads, status, onAccept, onD
             date={lead.date}
             suburb={lead.suburb}
             category={lead.category}
-            jobId={lead.id}
+            jobId={lead.jobId}
             description={lead.description}
             price={lead.price}
             accepted={status === 'accepted'}
-            phone={status === 'accepted' && lead.phone}
-            email={status === 'accepted' && lead.email}
-            onAccept={onAccept && (() => onAccept(lead.id))}
-            onDecline={onDecline && (() => onDecline(lead.id))}
+            phone={status === 'accepted' ? lead.phone : undefined}
+            email={status === 'accepted' ? lead.email : undefined}
+            onAccept={acceptLead ? () => acceptLead(lead.id) : undefined}
+            onDecline={declineLead ? () => declineLead(lead.id) : undefined}
           />
         ))
       )}

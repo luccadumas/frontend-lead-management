@@ -75,16 +75,16 @@ export const LeadList: React.FC<LeadListProps> = ({ leads, status, onAccept, onD
         filteredLeads.map((lead: Lead) => (
           <LeadCard
             key={lead.id}
-            name={lead.name}
+            name={`${lead.firstName} ${lead.lastName}`}
             date={lead.date}
             suburb={lead.suburb}
             category={lead.category}
             jobId={lead.jobId}
             description={lead.description}
             price={lead.price}
-            onAccept={() => onAccept(lead)}
-            onDecline={() => onDecline(lead)}
-            accepted={lead.accepted}
+            onAccept={onAccept && (() => onAccept(lead.id))}
+            onDecline={onDecline && (() => onDecline(lead.id))}
+            accepted={lead.status === 'accepted'}
             phone={lead.phone}
             email={lead.email}
           />
