@@ -57,9 +57,58 @@ The application will be available at `http://localhost:5173`
 
 ## Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| VITE_API_URL | Backend API URL | http://localhost:3000 |
+The project uses environment variables for configuration. Copy the example files and adjust the values according to your environment:
+
+```bash
+# Copy example files
+cp .env.example .env
+cp .env.development.example .env.development
+```
+
+### Available Environment Variables
+
+#### Common Variables (.env.example)
+```env
+# API Configuration
+VITE_API_URL=http://localhost:3000
+VITE_API_TIMEOUT=5000
+
+# Feature Flags
+VITE_ENABLE_ANALYTICS=false
+VITE_ENABLE_NOTIFICATIONS=true
+
+# Authentication
+VITE_AUTH_TOKEN_KEY=auth_token
+VITE_REFRESH_TOKEN_KEY=refresh_token
+
+# Environment
+NODE_ENV=development
+```
+
+#### Development Variables (.env.development.example)
+```env
+# Development Environment Configuration
+VITE_API_URL=http://localhost:3000
+VITE_API_TIMEOUT=10000
+
+# Development Features
+VITE_ENABLE_ANALYTICS=false
+VITE_ENABLE_NOTIFICATIONS=true
+VITE_ENABLE_MOCK_API=true
+
+# Development Authentication
+VITE_AUTH_TOKEN_KEY=auth_token_dev
+VITE_REFRESH_TOKEN_KEY=refresh_token_dev
+
+# Environment
+NODE_ENV=development
+```
+
+### Important Notes
+- Never commit `.env` files to version control
+- Keep `.env.example` and `.env.development.example` updated with new variables
+- Use `VITE_` prefix for variables that should be accessible in the frontend code
+- Sensitive information should be stored in `.env` files and not in example files
 
 ## Available Scripts
 
