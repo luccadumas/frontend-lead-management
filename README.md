@@ -14,7 +14,7 @@ A modern React-based lead management system built with TypeScript, featuring a c
 ## Prerequisites
 
 - Node.js (v18 or higher)
-- Yarn package manager
+- npm or Yarn package manager
 
 ## Getting Started
 
@@ -25,6 +25,13 @@ cd frontend-lead-management
 ```
 
 2. Install dependencies:
+
+Using npm:
+```bash
+npm install
+```
+
+Or using Yarn:
 ```bash
 yarn install
 ```
@@ -35,6 +42,13 @@ VITE_API_URL=http://localhost:3000
 ```
 
 4. Start the development server:
+
+Using npm:
+```bash
+npm run dev
+```
+
+Or using Yarn:
 ```bash
 yarn dev
 ```
@@ -49,6 +63,15 @@ The application will be available at `http://localhost:5173`
 
 ## Available Scripts
 
+Using npm:
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Fix ESLint issues
+- `npm run type-check` - Run TypeScript type checking
+
+Using Yarn:
 - `yarn dev` - Start development server
 - `yarn build` - Build for production
 - `yarn preview` - Preview production build
@@ -64,8 +87,15 @@ src/
 ├── components/     # Reusable components
 ├── contexts/       # React contexts
 ├── features/       # Feature-specific components
+│   └── leads/      # Lead management feature
+├── pages/          # Page components
 ├── services/       # API services
-└── styles/         # Global styles
+│   └── api/        # API client and endpoints
+├── styles/         # Global styles
+├── types/          # TypeScript type definitions
+├── App.tsx         # Root component
+├── main.tsx        # Application entry point
+└── vite-env.d.ts   # Vite type declarations
 ```
 
 ## Tech Stack
