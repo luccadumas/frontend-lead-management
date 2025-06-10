@@ -4,11 +4,11 @@ import { ListContainer, EmptyMessage, LoadingContainer, LoadingCard } from './st
 import { Pagination } from '@/components/Pagination';
 import { LeadListProps } from './types';
 import { useLeadList } from './hooks/useLeadList';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
 
 export const LeadList: React.FC<LeadListProps> = ({ status }) => {
   const {
     loading,
-    error,
     paginatedLeads,
     totalPages,
     page,
@@ -18,6 +18,8 @@ export const LeadList: React.FC<LeadListProps> = ({ status }) => {
     handleNextPage,
     filteredLeads
   } = useLeadList(status);
+
+  const { error } = useErrorHandler();
 
   if (loading) {
     return (
@@ -30,7 +32,11 @@ export const LeadList: React.FC<LeadListProps> = ({ status }) => {
   }
 
   if (error) {
-    return <EmptyMessage>Sorry, something went wrong. Please try again later.<br />Error: {error.message}</EmptyMessage>;
+    return (
+      <EmptyMessage data-testid="error-message">
+        Sorry, something went wrong. Please try again later.<br />Error: {error.message}
+      </EmptyMessage>
+    );
   }
 
   return (
@@ -46,8 +52,7 @@ export const LeadList: React.FC<LeadListProps> = ({ status }) => {
       ) : (
         <>
           {paginatedLeads.map(lead => {
-            const leadCardProps = {
-              key: lead.id,
+            const leadProps = {
               name: `${lead.firstName}${lead.lastName ? ' ' + lead.lastName : ''}`,
               date: lead.date,
               suburb: lead.suburb,
@@ -64,7 +69,7 @@ export const LeadList: React.FC<LeadListProps> = ({ status }) => {
               }),
             };
 
-            return <LeadCard {...leadCardProps} />;
+            return <LeadCard key={lead.id} {...leadProps} />;
           })}
           <Pagination
             page={page}
