@@ -53,7 +53,9 @@ export const LeadList: React.FC<LeadListProps> = ({ status }) => {
         <>
           {paginatedLeads.map(lead => {
             const leadProps = {
-              name: `${lead.firstName}${lead.lastName ? ' ' + lead.lastName : ''}`,
+              name: status === 'accepted'
+                ? `${lead.firstName}${lead.lastName ? ' ' + lead.lastName : ''}`
+                : lead.firstName,
               date: lead.date,
               suburb: lead.suburb,
               category: lead.category,
