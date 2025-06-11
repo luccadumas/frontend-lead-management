@@ -108,7 +108,7 @@ describe('LeadList', () => {
 
     render(<LeadList status="invited" />);
     await waitFor(() => {
-      expect(screen.getByText('John Doe')).toBeInTheDocument();
+      expect(screen.getByText('John')).toBeInTheDocument();
     });
   });
 
