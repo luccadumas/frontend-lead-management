@@ -3,6 +3,8 @@ import { LeadList } from '../index';
 import { useLeads } from '@/contexts/LeadsContext';
 import type { LeadCardProps } from '@/components/LeadCard/types';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '@/styles/theme';
 
 // Mock SVG imports with proper React components
 jest.mock('@/assets/icons/location.svg?react', () => () => <div data-testid="location-icon" />);
@@ -47,6 +49,14 @@ jest.mock('@/components/LeadCard', () => ({
   ),
 }));
 
+const renderWithTheme = (component: React.ReactNode) => {
+  return render(
+    <ThemeProvider theme={theme}>
+      {component}
+    </ThemeProvider>
+  );
+};
+
 describe('LeadList', () => {
   const mockLeads = [
     {
@@ -80,7 +90,7 @@ describe('LeadList', () => {
       fetchLeads: jest.fn(),
     });
 
-    render(<LeadList status="invited" />);
+    renderWithTheme(<LeadList status="invited" />);
     expect(screen.getAllByTestId('loading-card')).toHaveLength(3);
   });
 
@@ -92,7 +102,7 @@ describe('LeadList', () => {
       fetchLeads: jest.fn(),
     });
 
-    render(<LeadList status="invited" />);
+    renderWithTheme(<LeadList status="invited" />);
     expect(screen.getByText('No invited leads at this time.')).toBeInTheDocument();
   });
 
@@ -106,7 +116,7 @@ describe('LeadList', () => {
       declineLead: jest.fn(),
     });
 
-    render(<LeadList status="invited" />);
+    renderWithTheme(<LeadList status="invited" />);
     await waitFor(() => {
       expect(screen.getByText('John')).toBeInTheDocument();
     });
@@ -127,7 +137,7 @@ describe('LeadList', () => {
       clearError: jest.fn(),
     });
 
-    render(<LeadList status="invited" />);
+    renderWithTheme(<LeadList status="invited" />);
     
     const errorElement = screen.getByTestId('error-message');
     expect(errorElement).toBeInTheDocument();

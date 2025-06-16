@@ -1,114 +1,130 @@
 import styled from 'styled-components';
 
 export const Card = styled.div`
-  background: #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-  padding: 0 1.5rem 0.5rem 1.5rem;
+  background: ${({ theme }) => theme.colors.background};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  box-shadow: ${({ theme }) => theme.shadows.sm};
+  padding: 0 ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.lg};
   display: flex;
   flex-direction: column;
 `;
+
 export const Divider = styled.div`
-  width: calc(100% + 48px);
+  width: calc(100% + ${({ theme }) => `calc(${theme.spacing.lg} * 2)`});
   height: 1px;
-  background: #F0F0F0;
-  margin: 0 -1.5rem;
+  background: ${({ theme }) => theme.colors.border};
+  margin: 0 -${({ theme }) => theme.spacing.lg};
 `;
+
 export const Header = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
-  padding-top: 1.5rem;
+  margin-bottom: ${({ theme }) => theme.spacing.sm};
+  padding-top: ${({ theme }) => theme.spacing.lg};
+  gap: ${({ theme }) => theme.spacing.md};
 `;
+
 export const Avatar = styled.div`
   width: 48px;
   height: 48px;
-  border-radius: 50%;
-  background: #FFA94D;
-  color: #fff;
-  font-weight: bold;
-  font-size: 1.6rem;
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.background};
+  font-weight: ${({ theme }) => theme.typography.weights.bold};
+  font-size: ${({ theme }) => theme.typography.sizes['2xl']};
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 16px;
   flex-shrink: 0;
 `;
+
 export const ListContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  background-color: #f7f7f7;
-  margin-bottom: 1.5rem;
+  gap: ${({ theme }) => theme.spacing.md};
+  background-color: ${({ theme }) => theme.colors.backgroundAlt};
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
 `;
 
 export const EmptyMessage = styled.div`
   text-align: center;
-  color: #888;
-  font-size: 1.1rem;
-  padding: 32px 0;
-`; 
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme }) => theme.typography.sizes.lg};
+  padding: ${({ theme }) => theme.spacing.xl} 0;
+`;
+
 export const Row = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: ${({ theme }) => theme.spacing.sm};
   min-height: 40px;
+  gap: ${({ theme }) => theme.spacing.sm};
 `;
+
 export const Name = styled.div`
-  font-weight: bold;
-  font-size: 1.1rem;
-  margin-right: 12px;
+  font-weight: ${({ theme }) => theme.typography.weights.bold};
+  font-size: ${({ theme }) => theme.typography.sizes.lg};
+  margin-right: ${({ theme }) => theme.spacing.sm};
 `;
+
 export const Info = styled.div`
-  color: #8f8f8f;
-  font-size: 0.9rem;
-  margin-right: 16px;
-  font-weight: 600;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme }) => theme.typography.sizes.sm};
+  margin-right: ${({ theme }) => theme.spacing.md};
+  font-weight: ${({ theme }) => theme.typography.weights.semibold};
   a {
-    color: #ff6600;
+    color: ${({ theme }) => theme.colors.primary};
     text-decoration: none;
   }
 `;
+
 export const Description = styled.div`
-  margin: 12px 0;
-  color: #8f8f8f;
-  font-weight: 500;
-  font-size: 0.9rem;
+  margin: ${({ theme }) => theme.spacing.sm} 0;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-weight: ${({ theme }) => theme.typography.weights.medium};
+  font-size: ${({ theme }) => theme.typography.sizes.sm};
   max-width: 85%;
 `;
+
 export const Price = styled.div`
-  font-weight: bold;
-  color: #6E6E6E;
-  margin-left: 0.5rem;
-  font-size: 0.9rem;
+  font-weight: ${({ theme }) => theme.typography.weights.bold};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  margin-left: ${({ theme }) => theme.spacing.sm};
+  font-size: ${({ theme }) => theme.typography.sizes.sm};
   span {
-    font-weight: normal;
+    font-weight: ${({ theme }) => theme.typography.weights.regular};
   }
 `;
+
 export const PriceAccepted = styled.div`
-  color: #8f8f8f;
-  font-size: 0.9rem;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme }) => theme.typography.sizes.sm};
 `;
+
 export const Button = styled.button<{primary?: boolean}>`
-  background: ${({primary}) => (primary ? '#FE7D2B' : '#eee')};
-  color: ${({primary}) => (primary ? '#fff' : '#333')};
+  background: ${({ primary, theme }) => (primary ? theme.colors.primary : theme.colors.border)};
+  color: ${({ primary, theme }) => (primary ? theme.colors.background : theme.colors.text.primary)};
   border: none;
-  border-radius: 2px;
-  padding: 8px 18px;
-  margin-right: 10px;
-  font-weight: 500;
-  border-bottom: 2px solid #BEBEBE;
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
+  margin-right: ${({ theme }) => theme.spacing.sm};
+  font-weight: ${({ theme }) => theme.typography.weights.medium};
   cursor: pointer;
+  border-bottom: 2px solid ${({ theme }) => theme.colors.border};
+  transition: opacity 0.2s ease;
+  
   &:hover {
     opacity: 0.9;
+    background: ${({ primary, theme }) => (primary ? theme.colors.primary : theme.colors.background)};
   }
 `;
+
 export const Icon = styled.span`
-  font-size: 1.1rem;
+  font-size: ${({ theme }) => theme.typography.sizes.lg};
   display: inline-flex;
   vertical-align: middle;
-  margin-right: 4px;
+  margin-right: ${({ theme }) => theme.spacing.xs};
   svg {
     display: block;
   }

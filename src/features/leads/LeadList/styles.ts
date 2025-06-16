@@ -13,29 +13,29 @@ export const ListContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  background-color: #f7f7f7;
-  margin-bottom: 24px;
+  gap: ${({ theme }) => theme.spacing.md};
+  background-color: ${({ theme }) => theme.colors.backgroundAlt};
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
 `;
 
 export const EmptyMessage = styled.div`
   text-align: center;
-  color: #666;
-  padding: 32px;
-  font-size: 1.1rem;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  padding: ${({ theme }) => theme.spacing.xl};
+  font-size: ${({ theme }) => theme.typography.sizes.lg};
 `;
 
 export const LoadingContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: ${({ theme }) => theme.spacing.md};
 `;
 
 export const LoadingCard = styled.div`
-  background: #fff;
-  border: 1px solid #E2E2E2;
-  border-radius: 4px;
-  padding: 16px;
+  background: ${({ theme }) => theme.colors.background};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  padding: ${({ theme }) => theme.spacing.md};
   height: 200px;
   position: relative;
   overflow: hidden;
@@ -48,7 +48,11 @@ export const LoadingCard = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background: linear-gradient(90deg, 
+      ${({ theme }) => theme.colors.border} 25%, 
+      ${({ theme }) => theme.colors.background} 50%, 
+      ${({ theme }) => theme.colors.border} 75%
+    );
     background-size: 200% 100%;
   }
 `; 

@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
-import type { ToastType } from './index';
+import type { ToastType } from './types';
+import { Theme } from '@/styles/theme';
 
 const slideIn = keyframes`
   from {
@@ -23,30 +24,30 @@ const slideOut = keyframes`
   }
 `;
 
-const getBackgroundColor = (type: ToastType): string => {
+const getBackgroundColor = (type: ToastType, theme: Theme): string => {
   switch (type) {
     case 'success':
-      return '#4caf50';
+      return theme.colors.success;
     case 'error':
-      return '#f44336';
+      return theme.colors.error;
     case 'warning':
-      return '#ff9800';
+      return theme.colors.warning;
     case 'info':
-      return '#2196f3';
+      return theme.colors.primary;
     default:
-      return '#2196f3';
+      return theme.colors.primary;
   }
 };
 
 export const ToastContainer = styled.div<{ type: ToastType }>`
   position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: ${({ type }) => getBackgroundColor(type)};
-  color: white;
-  padding: 16px 24px;
-  border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  top: ${({ theme }) => theme.spacing.md};
+  right: ${({ theme }) => theme.spacing.md};
+  background-color: ${({ type, theme }) => getBackgroundColor(type, theme)};
+  color: ${({ theme }) => theme.colors.background};
+  padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  box-shadow: ${({ theme }) => theme.shadows.md};
   z-index: 1000;
   animation: ${slideIn} 0.3s ease-in-out;
   min-width: 200px;
@@ -59,6 +60,6 @@ export const ToastContainer = styled.div<{ type: ToastType }>`
 
 export const ToastMessage = styled.p`
   margin: 0;
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.typography.sizes.sm};
   line-height: 1.5;
 `; 
