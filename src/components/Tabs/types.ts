@@ -1,4 +1,4 @@
 export interface TabsProps {
-  active: 'invited' | 'accepted';
+  active: 'invited' | 'accepted' | 'declined';
   onChange: (tab: 'invited' | 'accepted') => void;
 } 
