@@ -1,14 +1,19 @@
 import type { Lead, LeadStatus } from '@/contexts/LeadsContext/types';
 import type { CreateLeadDTO, UpdateLeadDTO, LeadsApi } from './types';
-import { api } from '../client';
+import { apiRequest } from '../api';
+
+const leadHost = (import.meta.env.VITE_API_URL || 'http://localhost:3000').replace(/\/+$/, '');
+const baseUrl = `${leadHost}/api/leads`;
 
 export const leadsApi: LeadsApi = {
-  create: (data: CreateLeadDTO) => api.post<Lead>('/leads', data).then(response => response.data),
-  list: () => api.get<Lead[]>('/leads').then(response => response.data),
-  getByStatus: (status: LeadStatus) => api.get<Lead[]>(`/leads/status/${status}`).then(response => response.data),
-  getById: (id: string) => api.get<Lead>(`/leads/${id}`).then(response => response.data),
-  accept: (id: string) => api.post<Lead>(`/leads/${id}/accept`).then(response => response.data),
-  decline: (id: string) => api.post<Lead>(`/leads/${id}/decline`).then(response => response.data),
-  update: (id: string, data: UpdateLeadDTO) => api.put<Lead>(`/leads/${id}`, data).then(response => response.data),
-  delete: (id: string) => api.delete(`/leads/${id}`).then(() => undefined),
+  create: (data: CreateLeadDTO) => apiRequest<Lead>(baseUrl, { method: 'POST', body: data }),
+  list: () => apiRequest<Lead[]>(baseUrl),
+  getByStatus: (status: LeadStatus) => apiRequest<Lead[]>(`${baseUrl}/status/${status}`),
+  getById: (id: string) => apiRequest<Lead>(`${baseUrl}/${id}`),
+  accept: (id: string) => apiRequest<Lead>(`${baseUrl}/${id}/accept`, { method: 'POST' }),
+  decline: (id: string) => apiRequest<Lead>(`${baseUrl}/${id}/decline`, { method: 'POST' }),
+  update: (id: string, data: UpdateLeadDTO) => apiRequest<Lead>(`${baseUrl}/${id}`, { method: 'PUT', body: data }),
+  delete: async (id: string) => {
+    await apiRequest<unknown>(`${baseUrl}/${id}`, { method: 'DELETE' });
+  },
 }; 

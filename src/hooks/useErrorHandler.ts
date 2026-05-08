@@ -18,7 +18,7 @@ export const useErrorHandler = () => {
       });
     } else {
       setError({
-        message: 'An unexpected error occurred',
+        message: 'Ocorreu um erro inesperado',
       });
     }
   }, []);

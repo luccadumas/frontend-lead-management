@@ -19,7 +19,7 @@ export const LeadsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         : await leadsApi.list();
       setLeads(response);
     } catch (err) {
-      setError('Failed to fetch leads');
+      setError('Falha ao carregar leads');
       console.error(err);
     } finally {
       setLoading(false);
@@ -33,7 +33,7 @@ export const LeadsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       await leadsApi.accept(id);
       await fetchLeads();
     } catch (err) {
-      setError('Failed to accept lead');
+      setError('Falha ao aceitar lead');
       console.error(err);
     } finally {
       setLoading(false);
@@ -47,7 +47,7 @@ export const LeadsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       await leadsApi.decline(id);
       await fetchLeads();
     } catch (err) {
-      setError('Failed to decline lead');
+      setError('Falha ao recusar lead');
       console.error(err);
     } finally {
       setLoading(false);
@@ -64,7 +64,7 @@ export const LeadsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 export const useLeads = () => {
   const context = useContext(LeadsContext);
   if (context === undefined) {
-    throw new Error('useLeads must be used within a LeadsProvider');
+    throw new Error('useLeads precisa ser usado dentro de LeadsProvider');
   }
   return context;
 }; 

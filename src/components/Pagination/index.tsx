@@ -10,12 +10,12 @@ interface PaginationProps {
 
 export const Pagination: React.FC<PaginationProps> = ({ page, totalPages, onPrev, onNext }) => (
   <PaginationContainer>
-    <PaginationButton onClick={onPrev} disabled={page === 1} aria-label="Previous page">
-      Previous
+    <PaginationButton onClick={onPrev} disabled={page === 1} aria-label="Página anterior">
+      Anterior
     </PaginationButton>
-    <span>Page {page} of {totalPages}</span>
-    <PaginationButton onClick={onNext} disabled={page === totalPages} aria-label="Next page">
-      Next
+    <span>Página {page} de {totalPages}</span>
+    <PaginationButton onClick={onNext} disabled={page === totalPages} aria-label="Próxima página">
+      Próxima
     </PaginationButton>
   </PaginationContainer>
 ); 

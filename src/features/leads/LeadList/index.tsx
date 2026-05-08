@@ -23,9 +23,13 @@ export const LeadList: React.FC<LeadListProps> = ({ status }) => {
 
   if (loading) {
     return (
-      <LoadingContainer>
+      <LoadingContainer className="w-full space-y-4">
         {[1, 2, 3].map((key) => (
-          <LoadingCard key={key} data-testid="loading-card" />
+          <LoadingCard
+            key={key}
+            data-testid="loading-card"
+            className="h-52 rounded-lg border border-slate-200 bg-white"
+          />
         ))}
       </LoadingContainer>
     );
@@ -33,21 +37,24 @@ export const LeadList: React.FC<LeadListProps> = ({ status }) => {
 
   if (error) {
     return (
-      <EmptyMessage data-testid="error-message">
-        Sorry, something went wrong. Please try again later.<br />Error: {error.message}
+      <EmptyMessage
+        data-testid="error-message"
+        className="rounded-lg border border-red-200 bg-red-50 px-4 py-6 text-red-700"
+      >
+        Ocorreu um erro ao carregar os dados. Tente novamente em instantes.<br />Erro: {error.message}
       </EmptyMessage>
     );
   }
 
   return (
-    <ListContainer>
+    <ListContainer className="w-full space-y-4 pb-4">
       {filteredLeads.length === 0 ? (
-        <EmptyMessage>
+        <EmptyMessage className="rounded-lg border border-slate-200 bg-white px-4 py-10 text-slate-600">
           {status === 'invited'
-            ? 'No invited leads at this time.'
+            ? 'Nenhum lead convidado no momento.'
             : status === 'accepted'
-            ? 'No leads accepted at this time.'
-            : 'No leads declined at this time.'}
+            ? 'Nenhum lead aceito no momento.'
+            : 'Nenhum lead recusado no momento.'}
         </EmptyMessage>
       ) : (
         <>
@@ -73,12 +80,14 @@ export const LeadList: React.FC<LeadListProps> = ({ status }) => {
 
             return <LeadCard key={lead.id} {...leadProps} />;
           })}
-          <Pagination
-            page={page}
-            totalPages={totalPages}
-            onPrev={handlePrevPage}
-            onNext={handleNextPage}
-          />
+          <div className="rounded-lg bg-white px-4 py-3 shadow-sm ring-1 ring-slate-200">
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              onPrev={handlePrevPage}
+              onNext={handleNextPage}
+            />
+          </div>
         </>
       )}
     </ListContainer>

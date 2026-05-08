@@ -4,7 +4,7 @@ import type { TabsProps } from './types';
 
 export const Tabs: React.FC<TabsProps> = ({active, onChange}) => (
   <TabsWrapper>
-    <Tab $active={active === 'invited'} onClick={() => onChange('invited')}>Invited</Tab>
-    <Tab $active={active === 'accepted'} onClick={() => onChange('accepted')}>Accepted</Tab>
+    <Tab $active={active === 'invited'} onClick={() => onChange('invited')}>Convidados</Tab>
+    <Tab $active={active === 'accepted'} onClick={() => onChange('accepted')}>Aceitos</Tab>
   </TabsWrapper>
 ); 

@@ -33,11 +33,11 @@ const LeadCardComponent: React.FC<LeadCardProps> = ({
       </Info>
       <Info data-testid="info">
         <Icon data-testid="icon" />
-        Job ID: {jobId}
+        ID do serviço: {jobId}
       </Info>
       {accepted && (
         <Info data-testid="info">
-          <PriceAccepted>${price.toFixed(2)} Lead Invitation</PriceAccepted>
+          <PriceAccepted>R$ {price.toFixed(2)} Convite de lead</PriceAccepted>
         </Info>
       )}
     </Row>
@@ -49,7 +49,7 @@ const LeadCardComponent: React.FC<LeadCardProps> = ({
             <Icon data-testid="icon">
               <PhoneIcon aria-label="Phone icon" />
             </Icon>
-            <a href={`tel:${phone}`} aria-label={`Call ${phone}`}>{phone}</a>
+            <a href={`tel:${phone}`} aria-label={`Ligar para ${phone}`}>{phone}</a>
           </Info>
         )}
         {email && (
@@ -57,7 +57,7 @@ const LeadCardComponent: React.FC<LeadCardProps> = ({
             <Icon data-testid="icon">
               <EmailIcon aria-label="Email icon" />
             </Icon>
-            <a href={`mailto:${email}`} aria-label={`Send email to ${email}`}>{email}</a>
+            <a href={`mailto:${email}`} aria-label={`Enviar e-mail para ${email}`}>{email}</a>
           </Info>
         )}
       </Row>
@@ -65,9 +65,9 @@ const LeadCardComponent: React.FC<LeadCardProps> = ({
     <Description data-testid="description">{description}</Description>
     {!accepted && (
       <Row data-testid="row">
-        <Button data-testid="accept-button" primary onClick={onAccept}>Accept</Button>
-        <Button data-testid="decline-button" onClick={onDecline}>Decline</Button>
-        <Price data-testid="price">${price.toFixed(2)} <span>Lead Invitation</span></Price>
+        <Button data-testid="accept-button" primary onClick={onAccept}>Aceitar</Button>
+        <Button data-testid="decline-button" onClick={onDecline}>Recusar</Button>
+        <Price data-testid="price">R$ {price.toFixed(2)} <span>Convite de lead</span></Price>
       </Row>
     )}
   </Card>
